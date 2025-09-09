@@ -1,0 +1,21 @@
+@if (weatherData$ | async; as weatherDataToDisplay;) {
+  <button
+    type="button"
+    class="current-weather__toggle"
+    (click)="toggleIcon$.next()"
+    (keydown.enter)="toggleIcon$.next(); $event.preventDefault()"
+    [attr.aria-pressed]="showIcon$ | async"
+  >
+    {{ (showIcon$ | async) ? 'Hide icon' : 'Show icon' }}
+  </button>
+  <section class="current-weather">
+    <p class="current-weather__name">{{weatherDataToDisplay.dayName}}</p>
+    <!-- Add conditional -->
+    @if (showIcon$ | async) {
+      <img [src]="weatherDataToDisplay.icon" alt="Current weather icon" />
+    }
+    <p class="current-weather__temp">{{weatherDataToDisplay.tempC}}&#176;C</p>
+    <p class="current-weather__forecast-explanation">{{weatherDataToDisplay.forecastExplanation}}</p>
+  </section>
+}
+
