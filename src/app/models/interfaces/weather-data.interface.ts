@@ -53,7 +53,7 @@ export interface ForecastPeriod {
 export type ForecastResponse = ForecastFeature;
 
 export interface WeatherDataToDisplay {
-  dayName: string;
+  dayName: string | null;
   tempC: number | null;
   forecastExplanation: string;
   icon: string;
