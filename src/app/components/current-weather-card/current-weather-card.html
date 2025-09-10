@@ -1,18 +1,14 @@
 @if (weatherData$ | async; as weatherDataToDisplay;) {
-  <button
-    type="button"
-    class="current-weather__toggle"
-    (click)="toggleIcon$.next()"
-    (keydown.enter)="toggleIcon$.next(); $event.preventDefault()"
-    [attr.aria-pressed]="showIcon$ | async"
-  >
-    {{ (showIcon$ | async) ? 'Hide icon' : 'Show icon' }}
-  </button>
   <section class="current-weather">
-    <p class="current-weather__name">{{weatherDataToDisplay.dayName}}</p>
-    <!-- Add conditional -->
+    <mat-slide-toggle
+      aria-label="Toggle weather icon"
+      class="current-weather__toggle"
+      labelPosition="before"
+      (click)="toggleIcon$.next()"
+    > {{ (showIcon$ | async) ? 'Hide icon' : 'Show icon' }} </mat-slide-toggle>
+    <h2 class="current-weather__name">{{weatherDataToDisplay.dayName}}</h2>
     @if (showIcon$ | async) {
-      <img [src]="weatherDataToDisplay.icon" alt="Current weather icon" />
+      <img class="current-weather__icon" [ngSrc]="weatherDataToDisplay.icon" alt="Current weather icon" width="80" height="80"/>
     }
     <p class="current-weather__temp">{{weatherDataToDisplay.tempC}}&#176;C</p>
     <p class="current-weather__forecast-explanation">{{weatherDataToDisplay.forecastExplanation}}</p>

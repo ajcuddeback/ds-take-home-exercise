@@ -2,12 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {map, Observable, scan, shareReplay, startWith, Subject} from 'rxjs';
 import {ForecastResponse, WeatherDataToDisplay} from '../../models/interfaces/weather-data.interface';
 import {WeatherDataService} from '../../services/weather-data.service';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgOptimizedImage} from '@angular/common';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-current-weather-card',
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    MatSlideToggle,
+    NgOptimizedImage
   ],
   templateUrl: './current-weather-card.html',
   styleUrl: './current-weather-card.scss'
@@ -22,8 +25,7 @@ export class CurrentWeatherCard implements OnInit {
     shareReplay({ bufferSize: 1, refCount: true})
   )
 
-  constructor(private weatherDataService: WeatherDataService) {
-  }
+  constructor(private weatherDataService: WeatherDataService) {}
 
   ngOnInit() {
     this.weatherData$ = this.weatherDataService.fetchWeatherData().pipe(
