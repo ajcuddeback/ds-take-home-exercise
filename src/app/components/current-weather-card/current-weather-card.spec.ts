@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurrentWeatherCard } from './current-weather-card';
 
+// TODO: Add tests
 describe('CurrentWeatherCard', () => {
   let component: CurrentWeatherCard;
   let fixture: ComponentFixture<CurrentWeatherCard>;

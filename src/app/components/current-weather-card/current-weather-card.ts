@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {map, Observable, scan, shareReplay, startWith, Subject} from 'rxjs';
+import {BehaviorSubject, map, Observable, scan, shareReplay, startWith, Subject} from 'rxjs';
 import {ForecastResponse, WeatherDataToDisplay} from '../../models/interfaces/weather-data.interface';
 import {WeatherDataService} from '../../services/weather-data.service';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
@@ -8,14 +8,16 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-current-weather-card',
   imports: [
-    AsyncPipe,
     MatSlideToggle,
+    AsyncPipe,
     NgOptimizedImage
   ],
   templateUrl: './current-weather-card.html',
   styleUrl: './current-weather-card.scss'
 })
 export class CurrentWeatherCard implements OnInit {
+  // TODO: Add error handling
+  hasError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   weatherData$: Observable<WeatherDataToDisplay> | undefined;
   readonly toggleIcon$: Subject<void> = new Subject<void>();
 
@@ -29,6 +31,7 @@ export class CurrentWeatherCard implements OnInit {
 
   ngOnInit() {
     this.weatherData$ = this.weatherDataService.fetchWeatherData().pipe(
+      // TODO: Maybe think about timezone?
       map((weatherData: ForecastResponse) => {
         const today = new Date();
         const periodsToday = weatherData.properties.periods.filter(p => {
@@ -50,6 +53,7 @@ export class CurrentWeatherCard implements OnInit {
           };
         }
 
+        // TODO: Make this configurable - not default to Celcius. Maybe we want a user to change it as a preference
         const toC = (value: number, unit: string) =>
           unit.toUpperCase() === 'C' ? value : (value - 32) * (5 / 9);
 
