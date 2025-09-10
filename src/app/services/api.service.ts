@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {catchError, map, Observable, of, startWith, throwError} from 'rxjs';
-import {ForecastResponse, WeatherDataToDisplay} from '../models/interfaces/weather-data.interface';
+import {catchError, map, Observable, of, startWith} from 'rxjs';
 
 export type ApiResponse<T> =
   | { state: 'loading' }
@@ -25,7 +24,7 @@ export class ApiService {
         catchError(error => {
           console.error('Weather API failed', error);
           return of(
-            { state: 'error', message: this.humanizeHttpError(error.message) } as const,
+            { state: 'error', message: this.humanizeHttpError(error) } as const,
           )
         }),
       );

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {catchError, map, Observable, of, scan, shareReplay, startWith, Subject} from 'rxjs';
+import {map, Observable, scan, shareReplay, startWith, Subject} from 'rxjs';
 import {ForecastResponse, WeatherDataToDisplay} from '../../models/interfaces/weather-data.interface';
 import {WeatherDataService} from '../../services/weather-data.service';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
@@ -29,7 +29,7 @@ export class CurrentWeatherCard implements OnInit {
   constructor(private weatherDataService: WeatherDataService) {}
 
   ngOnInit() {
-    this.weatherData$ = this.weatherDataService.fetchWeatherData().pipe(
+    this.weatherData$ = this.weatherDataService.fetchWeatherForecast().pipe(
       map((apiResponse: ApiResponse<ForecastResponse>) => {
         switch (apiResponse.state) {
           case 'success':

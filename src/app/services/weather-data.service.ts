@@ -9,7 +9,7 @@ import {ApiResponse, ApiService} from './api.service';
 export class WeatherDataService {
   constructor(private apiService: ApiService) {}
 
-  fetchWeatherData(): Observable<ApiResponse<ForecastResponse>> {
+  fetchWeatherForecast(): Observable<ApiResponse<ForecastResponse>> {
     return this.apiService.get<ForecastResponse>("https://api.weather.gov/gridpoints/MLB/33,70/forecast");
   }
 }
