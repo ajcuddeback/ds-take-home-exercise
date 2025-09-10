@@ -1,12 +1,5 @@
 .current-weather {
-  background: #fff;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  max-width: 400px;
-  margin: 2rem auto;
   text-align: center;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &__toggle {
     display: flex;
@@ -18,12 +11,10 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin: 1rem 0 0.5rem;
-    color: #333;
+    color: var(--text-primary);
   }
 
   &__icon {
-    width: 80px;
-    height: 80px;
     object-fit: contain;
     border-radius: 12px;
     margin: 1rem auto;
@@ -41,8 +32,65 @@
 
   &__forecast-explanation {
     font-size: 1rem;
-    color: #555;
+    color: var(--text-primary);
     margin-top: 0.5rem;
     line-height: 1.5;
+  }
+}
+
+.current-weather, .skeleton-card {
+  background: var(--card-background);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  box-shadow: 0 6px 18px var(--card-box-shadow);
+}
+
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skeleton-text {
+  background-color: var(--skeleton-bg-color);
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.skeleton-toggle {
+  width: 40%;
+  height: 2rem;
+}
+
+.skeleton-title {
+  width: 30%;
+  height: 1.7rem;
+}
+
+.skeleton-temp {
+  width: 40%;
+  height: 2rem;
+}
+
+.skeleton-description {
+  width: 100%;
+  height: 1.3rem;
+}
+
+.skeleton-text {
+  background: linear-gradient(to right, var(--skeleton-slide-color1) 0%, var(--skeleton-slide-color2) 20%, var(--skeleton-slide-color1) 40%);
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
   }
 }

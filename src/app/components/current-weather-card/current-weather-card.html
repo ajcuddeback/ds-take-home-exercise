@@ -1,5 +1,6 @@
-@if (weatherData$ | async; as weatherDataToDisplay;) {
+@if (weatherData$ | async; as weatherDataToDisplay) {
   <section class="current-weather">
+    <!-- TODO: I need a better place for this toggle and icon. Toggling causes layout shift and toggle is in an odd place -->
     <mat-slide-toggle
       aria-label="Toggle weather icon"
       class="current-weather__toggle"
@@ -8,10 +9,17 @@
     > {{ (showIcon$ | async) ? 'Hide icon' : 'Show icon' }} </mat-slide-toggle>
     <h2 class="current-weather__name">{{weatherDataToDisplay.dayName}}</h2>
     @if (showIcon$ | async) {
-      <img class="current-weather__icon" [ngSrc]="weatherDataToDisplay.icon" alt="Current weather icon" width="80" height="80"/>
+      <img class="current-weather__icon" [ngSrc]="weatherDataToDisplay.icon" alt="Current weather icon" width="100" height="100"/>
     }
     <p class="current-weather__temp">{{weatherDataToDisplay.tempC}}&#176;C</p>
     <p class="current-weather__forecast-explanation">{{weatherDataToDisplay.forecastExplanation}}</p>
   </section>
+} @else {
+  <div class="skeleton-card">
+    <div class="skeleton-toggle skeleton-text"></div>
+    <div class="skeleton-title skeleton-text"></div>
+    <div class="skeleton-text skeleton-temp"></div>
+    <div class="skeleton-text skeleton-description"></div>
+  </div>
 }
 

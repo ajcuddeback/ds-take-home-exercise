@@ -1,0 +1,22 @@
+@use "variables";
+:root {
+  --bg-primary: #{variables.$bg-primary};
+  --text-primary: #{variables.$text-primary};
+  --card-background: #{variables.$card-background};
+  --card-box-shadow: #{variables.$card-box-shadow};
+  --skeleton-bg-color: #{variables.$skeleton-bg-color};
+  --skeleton-slide-color1: #{variables.$skeleton-slide-color1};
+  --skeleton-slide-color2: #{variables.$skeleton-slide-color2};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #{variables.$bg-primary-dark};
+    --text-primary: #{variables.$text-primary-dark};
+    --card-background: #{variables.$card-background-dark};
+    --card-box-shadow: #{variables.$card-box-shadow-dark};
+    --skeleton-bg-color: #{variables.$skeleton-bg-color-dark};
+    --skeleton-slide-color1: #{variables.$skeleton-slide-color1-dark};
+    --skeleton-slide-color2: #{variables.$skeleton-slide-color2-dark};
+  }
+}
