@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurrentWeatherCard } from './current-weather-card';
+import {MockProvider, MockService} from 'ng-mocks';
+import {WeatherDataService} from '../../services/weather-data.service';
+import {of} from 'rxjs';
+import {mockWeatherData} from '../../mocks/weather-data.mock';
 
 // TODO: Add tests
 describe('CurrentWeatherCard', () => {
@@ -9,7 +13,17 @@ describe('CurrentWeatherCard', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CurrentWeatherCard]
+      imports: [
+        CurrentWeatherCard
+      ],
+      providers: [
+        MockProvider(WeatherDataService, {
+          fetchWeatherForecast: () => of({
+            state: 'success',
+            data: mockWeatherData
+          })
+        })
+      ]
     })
     .compileComponents();
 
