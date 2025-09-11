@@ -38,7 +38,7 @@
   }
 }
 
-.current-weather, .skeleton-card {
+.current-weather, .skeleton {
   background: var(--card-background);
   border-radius: 1rem;
   padding: 1.5rem;
@@ -47,44 +47,38 @@
   box-shadow: 0 6px 18px var(--card-box-shadow);
 }
 
-.skeleton-card {
+.skeleton {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &__toggle {
+    width: 40%;
+    height: 2rem;
+  }
+
+  &__title {
+    width: 30%;
+    height: 1.7rem;
+  }
+
+  &__temp {
+    width: 40%;
+    height: 2rem;
+  }
+
+  &__description {
+    width: 100%;
+    height: 1.3rem;
+  }
 }
 
 .skeleton-text {
-  background-color: var(--skeleton-bg-color);
-  height: 20px;
   margin-bottom: 8px;
-}
-
-.skeleton-toggle {
-  width: 40%;
-  height: 2rem;
-}
-
-.skeleton-title {
-  width: 30%;
-  height: 1.7rem;
-}
-
-.skeleton-temp {
-  width: 40%;
-  height: 2rem;
-}
-
-.skeleton-description {
-  width: 100%;
-  height: 1.3rem;
-}
-
-.skeleton-text {
   background: linear-gradient(to right, var(--skeleton-slide-color1) 0%, var(--skeleton-slide-color2) 20%, var(--skeleton-slide-color1) 40%);
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite linear;
 }
-
 
 @keyframes shimmer {
   0% {

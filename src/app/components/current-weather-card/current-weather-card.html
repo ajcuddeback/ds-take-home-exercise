@@ -2,12 +2,12 @@
 @if (weatherData$ | async; as weatherDataToDisplay) {
   @switch (weatherDataToDisplay.state) {
     @case ("loading") {
-      <div class="skeleton-card">
-        <div class="skeleton-toggle skeleton-text"></div>
-        <div class="skeleton-title skeleton-text"></div>
-        <div class="skeleton-text skeleton-temp"></div>
-        <div class="skeleton-text skeleton-description"></div>
-      </div>
+      <section class="skeleton">
+        <div class="skeleton__toggle skeleton-text"></div>
+        <div class="skeleton__title skeleton-text"></div>
+        <div class="skeleton__temp skeleton-text"></div>
+        <div class="skeleton__description skeleton-text"></div>
+      </section>
     }
     @case ("success") {
       <section class="current-weather">
