@@ -1,81 +1,42 @@
-import {Component, OnInit} from '@angular/core';
-import {map, Observable, scan, shareReplay, startWith, Subject} from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {map, Observable} from 'rxjs';
 import {ForecastResponse, WeatherDataToDisplay} from '../../models/interfaces/weather-data.interface';
-import {WeatherDataService} from '../../services/weather-data.service';
-import {AsyncPipe, NgOptimizedImage} from '@angular/common';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {AsyncPipe} from '@angular/common';
 import {ApiResponse} from '../../services/api.service';
+import {WeatherCard} from '../weather-card/weather-card';
+import {WeatherDataService} from '../../services/weather-data.service';
 
 @Component({
   selector: 'app-current-weather-card',
   imports: [
-    MatSlideToggle,
     AsyncPipe,
-    NgOptimizedImage
+    WeatherCard
   ],
   templateUrl: './current-weather-card.html',
   styleUrl: './current-weather-card.scss'
 })
 export class CurrentWeatherCard implements OnInit {
-  weatherData$: Observable<ApiResponse<WeatherDataToDisplay>> | undefined;
-  readonly toggleIcon$: Subject<void> = new Subject<void>();
+  @Input() weatherData$: Observable<ApiResponse<ForecastResponse>> | undefined;
+  todayWeatherData$: Observable<ApiResponse<WeatherDataToDisplay>> | undefined;
 
-  readonly showIcon$: Observable<boolean> = this.toggleIcon$.pipe(
-    scan((acc) => !acc, false),
-    startWith(false),
-    shareReplay({ bufferSize: 1, refCount: true})
-  )
 
-  constructor(private weatherDataService: WeatherDataService) {}
+  constructor(private weatherDataService: WeatherDataService) { }
 
   ngOnInit() {
-    this.weatherData$ = this.weatherDataService.fetchWeatherForecast().pipe(
-      map((apiResponse: ApiResponse<ForecastResponse>) => {
-        switch (apiResponse.state) {
-          case 'success':
-            return {
-              ...apiResponse,
-              data: this.formatData(apiResponse.data)
-            }
-          default:
-            return apiResponse;
-        }
-
-      }),
-      shareReplay({ bufferSize: 1, refCount: true })
-    );
-  }
-
-  formatData(weatherData: ForecastResponse) {
-    const today = new Date();
-    const periodsToday = weatherData.properties.periods.filter(p => {
-      const d = new Date(p.startTime);
-      return d.getFullYear() === today.getFullYear()
-        && d.getMonth() === today.getMonth()
-        && d.getDate() === today.getDate();
-    });
-
-    const current =
-      periodsToday.find(p => p.isDaytime) ?? periodsToday[0] ?? weatherData.properties.periods[0];
-
-    if (!current) {
-      return {
-        dayName: new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(today),
-        tempC: null,
-        forecastExplanation: 'No data',
-        icon: ''
-      };
+    if (this.weatherData$) {
+      this.todayWeatherData$ = this.weatherData$.pipe(
+        map((apiResponse: ApiResponse<ForecastResponse>) => {
+          switch (apiResponse.state) {
+            case 'success':
+              return {
+                ...apiResponse,
+                data: this.weatherDataService.formatData(apiResponse.data)
+              }
+            default:
+              return apiResponse;
+          }
+        }),
+      )
     }
-
-    // TODO: Make this configurable - not default to Celcius. Maybe we want a user to change it as a preference
-    const toC = (value: number, unit: string) =>
-      unit.toUpperCase() === 'C' ? value : (value - 32) * (5 / 9);
-
-    return {
-      dayName: new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date(current.startTime)),
-      tempC: Math.round(toC(current.temperature, current.temperatureUnit) * 10) / 10,
-      forecastExplanation: current.shortForecast,
-      icon: current.icon
-    };
   }
 }

@@ -1,0 +1,12 @@
+<section class="preferences">
+  <mat-slide-toggle
+    aria-label="Toggle weather icon"
+    class="current-weather__toggle"
+    labelPosition="before"
+    (click)="toggleIcon()"
+  > {{ (showIcon$ | async) ? 'Hide icon' : 'Show icon' }} </mat-slide-toggle>
+</section>
+
+<section>
+  <app-current-weather-card [weatherData$]="weatherData$" />
+</section>
