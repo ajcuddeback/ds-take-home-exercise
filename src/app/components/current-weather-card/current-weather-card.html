@@ -1,35 +1,21 @@
-
-@if (weatherData$ | async; as weatherDataToDisplay) {
+@if (todayWeatherData$ | async; as weatherDataToDisplay) {
   @switch (weatherDataToDisplay.state) {
     @case ("loading") {
-      <section class="skeleton">
+      <div class="skeleton card-style">
         <div class="skeleton__toggle skeleton-text"></div>
         <div class="skeleton__title skeleton-text"></div>
         <div class="skeleton__temp skeleton-text"></div>
         <div class="skeleton__description skeleton-text"></div>
-      </section>
+      </div>
     }
     @case ("success") {
-      <section class="current-weather">
-        <mat-slide-toggle
-          aria-label="Toggle weather icon"
-          class="current-weather__toggle"
-          labelPosition="before"
-          (click)="toggleIcon$.next()"
-        > {{ (showIcon$ | async) ? 'Hide icon' : 'Show icon' }} </mat-slide-toggle>
-        <h2 class="current-weather__name">{{weatherDataToDisplay.data.dayName}}</h2>
-        @if (showIcon$ | async) {
-          <img class="current-weather__icon" [ngSrc]="weatherDataToDisplay.data.icon" alt="Current weather icon" width="100" height="100"/>
-        }
-        <p class="current-weather__temp">{{weatherDataToDisplay.data.tempC}}&#176;C</p>
-        <p class="current-weather__forecast-explanation">{{weatherDataToDisplay.data.forecastExplanation}}</p>
-      </section>
+     <app-weather-card [weatherData]="weatherDataToDisplay.data" />
     }
     @case ("error") {
-      <section class="current-weather error">
+      <div class="card-style error">
         <h2 class="error__title">Uh oh!</h2>
         <p class="error__message">{{ weatherDataToDisplay.message }}</p>
-      </section>
+      </div>
     }
   }
 }

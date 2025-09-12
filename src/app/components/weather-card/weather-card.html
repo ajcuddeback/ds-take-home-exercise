@@ -1,0 +1,10 @@
+@if (weatherData) {
+    <div class="weather-card card-style">
+      <h2 class="weather-card__name">{{weatherData.dayName}}</h2>
+      @if (showIcon$ | async) {
+        <img class="weather-card__icon" [ngSrc]="weatherData.icon" alt="Current weather icon" width="100" height="100"/>
+      }
+      <p class="weather-card__temp">{{weatherData.tempC}}&#176;C</p>
+      <p class="weather-card__forecast-explanation">{{weatherData.forecastExplanation}}</p>
+    </div>
+}
