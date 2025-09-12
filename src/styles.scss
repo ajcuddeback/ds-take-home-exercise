@@ -87,3 +87,12 @@ input{
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.card-style {
+  background: var(--card-background);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  box-shadow: 0 6px 18px var(--card-box-shadow);
+}
