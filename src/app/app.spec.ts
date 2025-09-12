@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import {MockComponents} from 'ng-mocks';
-import {CurrentWeatherCard} from './components/current-weather-card/current-weather-card';
+import {Home} from './components/home/home';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         App,
-        MockComponents(CurrentWeatherCard)
+        MockComponents(Home)
       ],
     }).compileComponents();
   });
