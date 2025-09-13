@@ -20,4 +20,9 @@ export class WeatherCard {
   constructor(private weatherDataService: WeatherDataService) {
     this.showIcon$ = this.weatherDataService.showIcon$;
   }
+
+  getTodayForFallback() {
+    const today = new Date();
+    return new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(today)
+  }
 }

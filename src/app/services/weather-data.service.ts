@@ -9,9 +9,18 @@ import {ApiResponse, ApiService} from './api.service';
 export class WeatherDataService {
   private toggleIcon$: Subject<void> = new Subject<void>();
 
+  /** I initially went with a Behavior Subject to keep the state of the toggleIcon.
+   * But this way is much more declaritive and easier to comprehend in the components.
+   * It also brings a separation of concerns. showIcon$ does what it says and just explains if we show it or not
+   * While toggleIcon$ actually emits an event that affects that toggle state.
+   * It's very clear what you need to call. And state is reset automaticlly. No need for cleanup of BehaviourSubject
+   */
   readonly showIcon$: Observable<boolean> = this.toggleIcon$.asObservable().pipe(
+    // Using scan to immediately change the value between false and true. It also keeps memory over time of the previous value. Unlike reduce.
     scan((acc) => !acc, false),
+    // Start with false per requirements
     startWith(false),
+    // Using refCount so if every observable unsubscribes from showIcon$, value is reset to false with via startWith
     shareReplay({ bufferSize: 1, refCount: true})
   );
 
@@ -27,6 +36,8 @@ export class WeatherDataService {
 
   formatData(weatherData: ForecastResponse): WeatherDataToDisplay {
     const today = new Date();
+    // TODO: May need to think about timezones here. While this works as I'm using EST on both ends
+    // It may not work for someone in another timezone
     const periodsToday = weatherData.properties.periods.filter(p => {
       const d = new Date(p.startTime);
       return d.getFullYear() === today.getFullYear()

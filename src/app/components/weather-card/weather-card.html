@@ -7,4 +7,9 @@
       <p class="weather-card__temp">{{weatherData.tempC}}&#176;C</p>
       <p class="weather-card__forecast-explanation">{{weatherData.forecastExplanation}}</p>
     </div>
+} @else {
+  <div class="weather-card card-style">
+    <h2 class="weather-card__name">{{getTodayForFallback()}}</h2>
+    <p class="weather-card__forecast-explanation">Failed to get weather data for today</p>
+  </div>
 }
