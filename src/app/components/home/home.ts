@@ -6,13 +6,15 @@ import {WeatherDataService} from '../../services/weather-data.service';
 import {CurrentWeatherCard} from '../current-weather-card/current-weather-card';
 import {AsyncPipe} from '@angular/common';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {ForecastSection} from '../forecast-section/forecast-section';
 
 @Component({
   selector: 'app-home',
   imports: [
     CurrentWeatherCard,
     AsyncPipe,
-    MatSlideToggle
+    MatSlideToggle,
+    ForecastSection
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss'

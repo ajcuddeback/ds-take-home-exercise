@@ -1,0 +1,19 @@
+<h2>Forecast</h2>
+
+@if (forecastDataResponse$ | async; as forecastResponse) {
+  @switch (forecastResponse.state) {
+    @case ("loading") {
+      <p>Loading...</p>
+    }
+    @case ("success") {
+      <div class="flex-container">
+        @for (forecast of forecastResponse.data; track $index) {
+          <app-weather-card class="weather-card" [weatherData]="forecast" />
+        }
+      </div>
+    }
+    @case ("error") {
+      <p>Error...</p>
+    }
+  }
+}
